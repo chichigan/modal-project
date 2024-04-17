@@ -2,8 +2,8 @@
 <!-- All other components we make will nested in this root components -->
 <template>
   <h1>{{ title }}</h1>
-  <!--3) Use the components -->
-  <Modal/>
+  <!--3) Use the components <Modal/> -->
+  <Modal :header="header" :text="text" theme="sale"/>
 </template>
 
 <script>
@@ -17,7 +17,9 @@ export default {
   components:{ Modal },
   data(){
     return {
-      title: 'My First Vue App :)'
+      title: 'My First Vue App :)',
+      header: 'Sign up for the giveaway',
+      text: 'Grab your ninja swag for half price!'
     }
   },
   methods: {
