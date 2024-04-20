@@ -2,8 +2,33 @@
 <!-- All other components we make will nested in this root components -->
 <template>
   <h1>{{ title }}</h1>
+  <p>Welcome...</p>
+
   <!--3) Use the components <Modal/> -->
-  <Modal :header="header" :text="text" theme="sale"/>
+  <teleport to=".modals" v-if="showModal">
+    <Modal theme="sale" @close="toggleModal">
+      <!-- Pass template in to <slot name="links"> -->
+      <template v-slot:links>
+        <a href="#">Sign up now</a>
+        <a href="#">More info</a>
+      </template>
+
+      <!-- Pass value in to default <slot> -->
+      <h1>Ninja Giveaway</h1>
+      <p>Grab your ninja swag for half price!</p>
+    </Modal>
+  </teleport>
+
+  <div v-if="showModalTwo">
+    <Modal @close="toggleModalTwo">
+      <h1>Sign up to the newsletter</h1>
+      <p>For updates and promo codes!</p>
+    </Modal>
+  </div>
+
+  <!-- @click.right is event modifier, when right click mouse will fire -->
+  <button @click.right="toggleModal">Open Modal</button>
+  <button @click="toggleModalTwo">Open Modal 2</button>
 </template>
 
 <script>
@@ -19,14 +44,17 @@ export default {
     return {
       title: 'My First Vue App :)',
       header: 'Sign up for the giveaway',
-      text: 'Grab your ninja swag for half price!'
+      text: 'Grab your ninja swag for half price!',
+      showModal: false,
+      showModalTwo: false
     }
   },
   methods: {
-    handleClick(){
-      console.log(this.$refs.name);
-      this.$refs.name.classList.add('active');
-      this.$refs.name.focus();
+    toggleModal(){
+      this.showModal = !this.showModal
+    },
+    toggleModalTwo(){
+      this.showModalTwo = !this.showModalTwo
     }
   }
 }
@@ -47,4 +75,5 @@ h1{
   display: inline-block;
   padding-bottom: 10px;
 }
+
 </style>
